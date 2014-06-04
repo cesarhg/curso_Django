@@ -1,0 +1,17 @@
+#Archivo donde se encuentran todos las variables importantes
+project/project/settings/variables.py
+
+#Archivos de la maquina virtual
+bin/
+include/
+lib/
+apache2/
+share/
+
+#Bases de datos
+*.db
+
+#Basura
+*.pyc
+*.DS_Store
+*.Python

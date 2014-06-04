@@ -1,0 +1,25 @@
+{%extends "base.html"%}
+
+{%block styles%}
+{%endblock%}
+
+{%block alerts%}
+{%endblock%}
+
+{%block content%}
+	
+	Bienvenido a la base de Django
+	<br>
+{% for elemento in cliente %}
+	{{elemento.nombre_cl}}
+	<br>
+	{% endfor %}
+
+{%endblock%}
+
+{%block js%}
+{%endblock%}
+
+{%block scripts%}
+{%endblock%}
+

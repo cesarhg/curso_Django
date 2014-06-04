@@ -1,0 +1,13 @@
+Django==1.6
+bpython==0.12
+django-braces==1.2.2
+django-model-utils==1.4.0
+logutils==0.3.3
+South==0.8.2
+wsgiref==0.1.2
+slugify==0.0.1
+django-bootstrap3==2.5.0
+Pillow==2.3.0
+django-reversion==1.8.0
+django-mptt==0.6.0
+python-dateutil==2.2

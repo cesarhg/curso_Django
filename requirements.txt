@@ -1,0 +1,3 @@
+# Este archivo contiene los paquetes necesarios para correr el proyecto
+#
+-r requirements/produccion.txt
