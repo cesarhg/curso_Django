@@ -8,7 +8,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 		<!-- basic styles -->
-		
+
 
 		<link href="{{STATIC_URL}}ace/assets/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ace/assets/css/font-awesome.min.css" />
@@ -64,7 +64,7 @@
 									<div class="widget-body">
 										<div class="widget-main">
 											<h4 class="header blue lighter bigger">
-										
+
 												Ingresa tus datos 
 											</h4>
 
@@ -74,13 +74,13 @@
 											{%else%}
 												<p> Bienvenido </p>
 											{%endif%}
-											
+
 											<form method="post" enctype="multipart/form-data">{% csrf_token %}
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															{{formulario.usuario}}
-							
+
 															<i class="icon-user"></i>
 														</span>
 													</label>
@@ -95,7 +95,7 @@
 
 													<div class="clearfix">
 
-														<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
+														<button type="submit" id='enviar_formulario' class="width-35 pull-right btn btn-sm btn-primary">
 															<i class="icon-key"></i>
 															Entrar
 														</button>
@@ -105,7 +105,7 @@
 												</fieldset>
 											</form>
 
-										
+
 										</div><!-- /widget-main -->
 
 										<div class="toolbar clearfix">
@@ -193,14 +193,14 @@
 															<i class="icon-user"></i>
 														</span>
 													</label>
-													
+
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="text" class="form-control" placeholder="Empresa" />
 															<i class="icon-building"></i>
 														</span>
 													</label>
-													
+
 
 													<label class="block">
 														<input type="checkbox" class="ace" />
@@ -250,6 +250,8 @@
 			window.jQuery || document.write("<script src='{{STATIC_URL}}ace/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
 		</script>
 
+		<script src="{{STATIC_URL}}js/formularios.js"></script>
+
 		<!-- <![endif]-->
 
 		<!--[if IE]>
@@ -269,6 +271,44 @@
 			 jQuery('.widget-box.visible').removeClass('visible');
 			 jQuery('#'+id).addClass('visible');
 			}
+		</script>
+
+		<script type="text/javascript">
+
+			$('#enviar_formulario').click('submit', function(e){
+				e.preventDefault();
+				var data = new FormData();
+				usuario = $('#id_usuario').val()
+				password = $('#id_password').val()
+				data.append("usuario", usuario);
+				data.append("password", password);
+				$.ajax({
+					type: "POST",
+					dataType: 'json',
+					url: '{%url "validar_login"%}',
+					data: data,
+					
+					success: function(data){
+						console.log(data)
+						if(data.access==true){
+							alert('Bienvenido')
+							location.reload();
+						}
+						else{
+							datos=JSON.parse(data.usuarios)
+							$.each(datos, function(i,el){
+								console.log(el.fields.usuario)
+							});							
+						}
+					},
+					error: function(data){
+                      	alert("Algo salio mal")                                                                  
+					},
+					processData: false,
+					contentType: false
+				})
+			});
+
 		</script>
 	</body>
 </html>

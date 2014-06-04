@@ -11,6 +11,7 @@ import json
 from context_processors import *
 from forms import *
 from models import *
+from django.core import serializers
 
 def inicio(request):
 	globales = variables_globales(request)
@@ -48,6 +49,7 @@ def salir(request):
 def index(request):	
 	cliente = Cliente.objects.all()
 	contacto= ContactoForm()
+
 
 	
 	return render(request, 'index.html', locals())
@@ -89,6 +91,28 @@ def venta(request):
 					ventas.save()
 
 	return render(request, 'ventasx.html', locals())
+
+@csrf_exempt
+def validar_login(request):
+	usuarios=serializers.serialize('json',Usuario.objects.all())
+	usuario = request.POST['usuario']
+	password = request.POST['password']
+	acceso = authenticate(username=str(usuario), password=str(password))
+	if acceso is not None:			
+			if acceso.is_active:
+				login(request, acceso)
+				data = {'access':True, 'mensaje':'Bienvenido'}
+			else:
+				mensaje="Tu usuario esta desactivado"
+				data = {'mensaje':mensaje, 'access':False}	
+	else:
+		mensaje="Usuario o contraseña incorrecta"
+		data = {'access':False, 'mensaje':mensaje, 'usuarios':usuarios}
+
+		print usuarios
+	http_response = HttpResponse(json.dumps(data),mimetype='application/json')
+	return http_response
+
 	
 
 

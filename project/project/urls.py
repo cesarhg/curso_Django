@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^index/$', index, name='index'),
 	url(r'^productosx/$', producto, name='producto'),
 	url(r'^ventax/$', venta, name='venta'),
+	url(r'^validar-login/$', validar_login, name='validar_login'),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
