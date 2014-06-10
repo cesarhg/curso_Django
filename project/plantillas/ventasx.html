@@ -246,6 +246,15 @@
 												
 											</button>
 											</form>
+										    <br />
+
+											<form name='mensaje' id='enviar_mensaje' action="#" method="post">{% csrf_token %}
+											<input type="text" class="" id='mensaje_de_contacto'>
+											<button class="btn btn-info" type="submit" >
+												<i class="icon-ok bigger-110">Enviar mensaje</i>
+												
+											</button>
+											</form>
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
@@ -282,7 +291,7 @@ if("ontouchend" in document) document.write("<script src='{{STATIC_URL}}ace/asse
 <script src="{{STATIC_URL}}ace/assets/js/bootstrap.min.js"></script>
 <script src="{{STATIC_URL}}ace/assets/js/typeahead-bs2.min.js"></script>
 <script src="{{STATIC_URL}}django/formularios.js"></script>
-
+<script src="http://127.0.0.1:8080/socket.io/socket.io.js"></script>
 <!-- page specific plugin scripts -->
 {%block js%}{%endblock%}
 
@@ -295,5 +304,23 @@ if("ontouchend" in document) document.write("<script src='{{STATIC_URL}}ace/asse
 
 
 {%block scripts%}{%endblock%}
+<script type="text/javascript">
+
+		var socket = io.connect ('http://localhost:8080')
+
+		$('#enviar_mensaje').on('submit',function(e){
+			e.preventDefault();
+			mensaje_de_texto = $('#mensaje_de_contacto').val()	
+			socket.emit('enviar_mensaje', {'mensaje_de_texto':mensaje_de_texto})
+		});
+
+		socket.on('recibir_mensaje',function(data){
+			
+		    data = JSON.parse(data);
+		    console.log(data);	
+
+
+		});
+</script>
 </body>
 </html>

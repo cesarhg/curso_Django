@@ -113,6 +113,13 @@ def validar_login(request):
 	http_response = HttpResponse(json.dumps(data),mimetype='application/json')
 	return http_response
 
+
+@csrf_exempt
+def recibir_mensaje(request):
+	texto = request.POST['mensaje_de_texto']
+	data = {'texto':texto}
+	return HttpResponse(json.dumps(data),mimetype='application/json')
+	
 	
 
 
